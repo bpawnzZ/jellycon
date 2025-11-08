@@ -10,8 +10,6 @@ import xbmcplugin
 import xbmcaddon
 from six import ensure_binary, ensure_text
 from six.moves.urllib.parse import quote
-
-# from .dir_functions import get_content  # Removed to avoid circular import
 from .jellyfin import api
 from .kodi_utils import add_menu_directory_item, HomeWindow
 from .lazylogger import LazyLogger
@@ -616,8 +614,7 @@ def display_menu(params):
         display_favorites_by_type(params)
     elif menu_type == "show_folders":
         display_folder_view(params)
-    elif menu_type == "show_genres":
-        display_genres_view(params)
+
 
 
 def show_global_types(params):
@@ -1287,9 +1284,7 @@ def display_library_views(params):
     add_menu_directory_item(translate_string(30678),
                             "plugin://plugin.video.jellycon/?mode=SHOW_ADDON_MENU&type=show_favorites")
 
-    # Add Browse Genres option to Jellyfin Libraries
-    add_menu_directory_item(translate_string(30687),
-                            "plugin://plugin.video.jellycon/?mode=SHOW_ADDON_MENU&type=show_genres")
+
 
     xbmcplugin.endOfDirectory(handle)
 
@@ -1570,28 +1565,7 @@ def display_folder_view(params):
     xbmcplugin.endOfDirectory(handle)
 
 
-def display_genres_view(params):
-    """Display genre browsing options"""
-    handle = int(sys.argv[1])
-    xbmcplugin.setContent(handle, 'files')
 
-    # Movie genres
-    add_menu_directory_item(translate_string(30688),
-                            "plugin://plugin.video.jellycon/?mode=GENRES&item_type=movie")
-
-    # TV Show genres
-    add_menu_directory_item(translate_string(30689),
-                            "plugin://plugin.video.jellycon/?mode=GENRES&item_type=tvshow")
-
-    # Music genres
-    add_menu_directory_item(translate_string(30690),
-                            "plugin://plugin.video.jellycon/?mode=GENRES&item_type=MusicAlbum")
-
-    # Mixed genres (Movies & TV Shows)
-    add_menu_directory_item(translate_string(30691),
-                            "plugin://plugin.video.jellycon/?mode=GENRES&item_type=mixed")
-
-    xbmcplugin.endOfDirectory(handle)
 
 
 def add_parent_folder_navigation(parent_id=None):
